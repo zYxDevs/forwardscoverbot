@@ -84,9 +84,7 @@ async def process_message(
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         if len(removed_buttons_from_keyboard) > 0:
             await message.reply_text(
-                '{} buttons have been removed. I support only link buttons'.format(
-                    len(removed_buttons_from_keyboard)
-                )
+                f'{len(removed_buttons_from_keyboard)} buttons have been removed. I support only link buttons'
             )
     else:
         reply_markup = None
@@ -96,7 +94,7 @@ async def process_message(
     if spoiler_action:
         if spoiler_action == 'add':
             new_spoiler = True
-        if spoiler_action == 'remove':
+        elif spoiler_action == 'remove':
             new_spoiler = False
 
 
@@ -171,7 +169,7 @@ async def process_message(
             parse_mode=ParseMode.HTML, 
             reply_markup=reply_markup
         )
-    
+
     elif message.video:
         media = message.video.file_id
         duration = message.video.duration
@@ -220,7 +218,7 @@ async def process_message(
         length = message.video_note.length
         duration = message.video_note.duration
         await message.reply_video_note(video_note=media, length=length, duration=duration, reply_markup=reply_markup)
-    
+
     elif message.dice:
         await context.bot.sendDice(chat_id=update.effective_user.id, reply_markup=reply_markup, emoji=message.dice.emoji)
 
