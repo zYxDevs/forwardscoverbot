@@ -19,9 +19,7 @@ import yaml
 import sys
 
 
-path = "config/config.yaml"
-if len(sys.argv) == 2:
-    path = sys.argv[1]
+path = sys.argv[1] if len(sys.argv) == 2 else "config/config.yaml"
 try:
     with open(path, 'r') as stream:
         conf = yaml.load(stream, Loader=yaml.FullLoader)
