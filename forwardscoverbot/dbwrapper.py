@@ -26,10 +26,7 @@ async def run_query(query, *params, read=False, one=False):
         async with db.execute(query, params) as cursor:
             await db.commit()
             if read:
-                if not one:
-                    return await cursor.fetchall()
-                else:
-                    return await cursor.fetchone()
+                return await cursor.fetchall() if not one else await cursor.fetchone()
 
 
 async def create_db():
@@ -59,5 +56,4 @@ async def stats_text():
     last7d = (await run_query(query, interval7d, read=True, one=True))[0]
 
     text = "<b>Total users:</b> {0}\n<b>Last7days:</b> {1}\n<b>Last24h:</b> {2}"
-    text = text.format(utils.sep(total), utils.sep(last7d), utils.sep(last24h))
-    return text
+    return text.format(utils.sep(total), utils.sep(last7d), utils.sep(last24h))

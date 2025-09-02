@@ -171,10 +171,7 @@ async def add_caption(update, context):
     caption_html = " ".join(update.message.text_html.split(" ")[1:])
 
     if len(caption) > MessageLimit.CAPTION_LENGTH:
-        text = "This caption is too long. max allowed: {} chars. Please retry removing {} chars.".format(
-            MessageLimit.CAPTION_LENGTH,
-            len(caption) - MessageLimit.CAPTION_LENGTH 
-        )
+        text = f"This caption is too long. max allowed: {MessageLimit.CAPTION_LENGTH} chars. Please retry removing {len(caption) - MessageLimit.CAPTION_LENGTH} chars."
         await context.bot.sendMessage(
             chat_id=update.message.from_user.id,
             text=text,
@@ -187,15 +184,15 @@ async def add_caption(update, context):
 
 
 async def add_buttons(update, context):
-    usage = (
-        "<b>Using this command you can add buttons to messages.</b>\nReply with this command to the message where you want to add the buttons. Example:\n\n"
-        "<code>/addbuttons first link=https://telegram.org && second link same row=https://google.it &&& third link new row=https://t.me</code>"
-        "\n\nSo the format for a button is [text]=[link]. Buttons on the same line are separated by && and on new lines are separeted by &&&."
-    )
     if not update.message.reply_to_message or len(context.args) < 1:
+        usage = (
+            "<b>Using this command you can add buttons to messages.</b>\nReply with this command to the message where you want to add the buttons. Example:\n\n"
+            "<code>/addbuttons first link=https://telegram.org && second link same row=https://google.it &&& third link new row=https://t.me</code>"
+            "\n\nSo the format for a button is [text]=[link]. Buttons on the same line are separated by && and on new lines are separeted by &&&."
+        )
         await update.message.reply_text(text=usage, parse_mode='HTML')
         return
-    
+
     param = ' '.join(context.args)
     rows = param.split('&&&')
     lst = []
@@ -208,7 +205,7 @@ async def add_buttons(update, context):
                 text = text.strip()
                 link = link.strip()
                 button = InlineKeyboardButton(text=text, url=link)
-                
+
                 row_lst.append(button)
             lst.append(row_lst)
         except Exception as e:

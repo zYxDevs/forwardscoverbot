@@ -25,13 +25,11 @@ def github_link_kb():
             text="Source code", 
             url="https://github.com/91DarioDev/ForwardsCoverBot")
     buttons_list = [[button0]]
-    keyboard = InlineKeyboardMarkup(buttons_list)
-    return keyboard
+    return InlineKeyboardMarkup(buttons_list)
 
 
 def private_chat_kb():
-    bot_link = "https://t.me/{}".format(constants.GET_ME.username)
+    bot_link = f"https://t.me/{constants.GET_ME.username}"
     button0 = InlineKeyboardButton(text="Private chat", url=bot_link)
     buttons_list = [[button0]]
-    keyboard = InlineKeyboardMarkup(buttons_list)
-    return keyboard
+    return InlineKeyboardMarkup(buttons_list)
